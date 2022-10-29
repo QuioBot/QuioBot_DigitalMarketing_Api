@@ -69,3 +69,6 @@ jobs:
           kubectl exec -it $SINGLE_POD_NAME -- bash /app/collectstatic.sh
 
 
+
+
+
