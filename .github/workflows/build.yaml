@@ -10,7 +10,7 @@ on:
 
 jobs:
   test_django_job:
-    uses: QuioBot/QuioBot-DigitalMarketing-Api/.github/workflows/test-django.yaml@main
+    uses: QuioBot/QuioBot_DigitalMarketing_Api/.github/workflows/test-django.yaml@main
   build:
     runs-on: ubuntu-latest
     needs: [test_django_job]
