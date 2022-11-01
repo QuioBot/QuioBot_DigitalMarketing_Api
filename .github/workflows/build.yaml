@@ -41,12 +41,12 @@ jobs:
             -t elghibaomar/digital-marketing-api:latest \
             -t elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
             .
-      - name: Build container image
-        working-directory: .
-        run: |
-          docker build -f Dockerfile \
-            -t elghibaomar/digital-marketing-api:latest \
-            -t elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
+      # - name: Build container image
+      #   working-directory: .
+      #   run: |
+      #     docker build -f Dockerfile \
+      #       -t elghibaomar/digital-marketing-api:latest \
+      #       -t elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
             .
       - name: Push image
         run: |
@@ -71,7 +71,7 @@ jobs:
           POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
           EOF
           kubectl delete secret django-k8s-web-prod-env
-          kubectl create secret generic django-k8s-web-prod-env --from-env-file=web/.env.prod
+          kubectl create secret generic django-k8s-web-prod-env --from-env-file=.env.prod
       - name: Update Deployment image
         run: |
           kubectl set image deployment/digital-marketing-api-deployment digital-marketing-api=elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
