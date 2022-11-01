@@ -23,7 +23,7 @@ spec:
               name: django-k8s-web-prod-env
         env:
           - name: PORT
-            value: "8002"
+            value: "3000"
         ports:
         - containerPort: 3000
       imagePullSecrets:
