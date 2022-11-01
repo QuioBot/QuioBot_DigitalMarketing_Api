@@ -70,6 +70,7 @@ jobs:
           POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
           EOF
+          kubectl delete secret digital-marketing-api-prod-env
           kubectl create secret generic digital-marketing-api-prod-env --from-env-file=.env.prod
       - name: Update Deployment image
         run: |
