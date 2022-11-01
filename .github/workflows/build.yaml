@@ -70,8 +70,7 @@ jobs:
           POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
           EOF
-          kubectl delete secret django-k8s-web-prod-env
-          kubectl create secret generic django-k8s-web-prod-env --from-env-file=.env.prod
+          kubectl create secret generic digital-marketing-api-prod-env --from-env-file=.env.prod
       - name: Update Deployment image
         run: |
           kubectl set image deployment/digital-marketing-api-deployment digital-marketing-api=elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
