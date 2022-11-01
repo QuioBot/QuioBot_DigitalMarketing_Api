@@ -1,13 +1,12 @@
-.env.prod
-web/.env
+.env
 .DS_Store
+.env.prod
 .kube/
 notes.md
 node_modules
 cht1
 seav
 dgapi
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

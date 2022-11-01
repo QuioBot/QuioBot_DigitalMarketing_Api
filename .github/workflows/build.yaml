@@ -42,7 +42,7 @@ jobs:
             -t elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
             .
       - name: Build container image
-        working-directory: ./web
+        working-directory: .
         run: |
           docker build -f Dockerfile \
             -t elghibaomar/digital-marketing-api:latest \
