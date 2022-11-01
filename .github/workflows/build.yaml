@@ -47,7 +47,7 @@ jobs:
       #     docker build -f Dockerfile \
       #       -t elghibaomar/digital-marketing-api:latest \
       #       -t elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
-            .
+            # .
       - name: Push image
         run: |
           docker push elghibaomar/digital-marketing-api --all-tags
