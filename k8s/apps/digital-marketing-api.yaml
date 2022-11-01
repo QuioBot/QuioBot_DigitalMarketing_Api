@@ -20,14 +20,14 @@ spec:
         imagePullPolicy: Always
         envFrom:
           - secretRef:
-              name: digital-marketing-api-prod-env
+              name: django-k8s-web-prod-env
         env:
           - name: PORT
             value: "3000"
         ports:
         - containerPort: 3000
       imagePullSecrets:
-        - name: digital-marketing-api-prod-env   
+        - name: django-k8s-web-prod-env  
 
 
 ---
