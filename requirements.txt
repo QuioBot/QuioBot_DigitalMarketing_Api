@@ -1,4 +1,4 @@
-django
+django>=3.2,<4.2
 gunicorn
 requests
 django-dotenv
@@ -7,6 +7,4 @@ django-storages
 boto3
 django-rest-framework
 django-cors-headers
-djoser
 pandas
-django-extensions

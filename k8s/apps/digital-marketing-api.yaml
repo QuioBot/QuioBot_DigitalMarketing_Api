@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: digital-marketing-api
-        image: elghibaomar/django-k8s-web:latest
+        image: elghibaomar/digital-marketing-api:latest
         imagePullPolicy: Always
         envFrom:
           - secretRef:

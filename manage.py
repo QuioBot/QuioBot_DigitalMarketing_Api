@@ -5,14 +5,9 @@ import sys
 import dotenv
 
 
-from django.core.management.commands.runserver import Command as runserver
-runserver.default_port = "3000"
-
-
-
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_k8s.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

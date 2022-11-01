@@ -10,3 +10,5 @@ RUN /opt/venv/bin/pip install pip --upgrade && \
     chmod +x entrypoint.sh
 
 CMD ["/app/entrypoint.sh"]
+
+

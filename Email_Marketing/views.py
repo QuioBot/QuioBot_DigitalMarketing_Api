@@ -141,18 +141,3 @@ def Gender_Conversion(request):
         df['Conversion'] = df['Purchase'].apply(lambda x : 1 if x == "yes" else 0)
         df_gender = df.groupby(by = 'Gender')['Conversion'].sum()
         return Response(df_gender[1:3])
-
-
-
-
-@api_view(['POST'])
-def Upload(request):
-    # GET
-    if request.method == 'POST':
-        gender = Email.objects.all()
-        serializer = EmailSerializer(gender, many=True)
-        df = pd.DataFrame(serializer.data)
-        df = pd.DataFrame(gender.values())
-        df['Conversion'] = df['Purchase'].apply(lambda x : 1 if x == "yes" else 0)
-        df_gender = df.groupby(by = 'Gender')['Conversion'].sum()
-        return Response(df_gender[1:3])
