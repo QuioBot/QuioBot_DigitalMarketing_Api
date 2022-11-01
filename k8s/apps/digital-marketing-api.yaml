@@ -16,18 +16,18 @@ spec:
     spec:
       containers:
       - name: digital-marketing-api
-        image: elghibaomar/digital-marketing-api:latest
+        image: elghibaomar/django-k8s-web:latest
         imagePullPolicy: Always
         envFrom:
           - secretRef:
-              name: django-k8s-web-prod-env
+              name: digital-marketing-api-prod-env
         env:
           - name: PORT
             value: "3000"
         ports:
         - containerPort: 3000
       imagePullSecrets:
-        - name: digital-marketing-api-deployment 
+        - name: digital-marketing-api-prod-env
 
 
 ---

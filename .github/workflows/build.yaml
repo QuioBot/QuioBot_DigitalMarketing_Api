@@ -25,32 +25,26 @@ jobs:
           token: ${{ secrets.DO_API_TOKEN_KEY }}
       - name: Login to DO Container Registry with short-lived creds
         run: doctl registry login --expiry-seconds 1200
-      # - name: docker login
-      #   env:
-      #     DOCKER_USER: ${{secrets.DOCKER_USER}}
-      #     DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      #   run: |
-      #     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+      - name: docker login
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
       # - name: Build the Docker image
       #   run: docker build . --file Dockerfile --tag elghibaomar/digital-marketing-api:latest 
 
-      # - name: Build container image
-      #   working-directory: .
-      #   run: |
-      #     docker build -f Dockerfile \
-      #       -t elghibaomar/digital-marketing-api:latest \
-      #       -t elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
-            # .
-      # - name: Build container image
-      #   working-directory: .
-      #   run: |
-      #     docker build -f Dockerfile \
-      #       -t elghibaomar/digital-marketing-api:latest \
-      #       -t elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
-            # .
-      # - name: Push image
-      #   run: |
-      #     docker push elghibaomar/digital-marketing-api --all-tags
+      - name: Build container image
+        working-directory: .
+        run: |
+          docker build -f Dockerfile \
+            -t elghibaomar/digital-marketing-api:latest \
+            -t elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
+            .
+
+      - name: Push image
+        run: |
+          docker push elghibaomar/digital-marketing-api --all-tags
       - name: K8s cluster kubeconfig file with/ short-lived creds
         run: |
           doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.CLUSTER_NAME }}
@@ -70,19 +64,19 @@ jobs:
           POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
           EOF
-
+          kubectl delete secret digital-marketing-api-prod-env
           kubectl create secret generic digital-marketing-api-prod-env --from-env-file=.env.prod
-      # - name: Update Deployment image
-      #   run: |
-      #     kubectl set image deployment/digital-marketing-api-deployment digital-marketing-api=elghibaomar/django-k8s-web:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
-      # - name: Wait for rollout to finish
-      #   run: |
-      #     kubectl rollout status deployment/digital-marketing-api-deployment
-      # - name: Post-build Django Commands - Migrate / Collectstatic
-      #   run: |
-      #     export SINGLE_POD_NAME=$(kubectl get pod -l app=digital-marketing-api-deployment -o jsonpath="{.items[0].metadata.name}")
-      #     kubectl exec -it $SINGLE_POD_NAME -- bash /app/migrate.sh
-      #     kubectl exec -it $SINGLE_POD_NAME -- bash /app/collectstatic.sh
+      - name: Update Deployment image
+        run: |
+          kubectl set image deployment/digital-marketing-api-deployment digital-marketing-api=elghibaomar/digital-marketing-api:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
+      - name: Wait for rollout to finish
+        run: |
+          kubectl rollout status deployment/digital-marketing-api-deployment
+      - name: Post-build Django Commands - Migrate / Collectstatic
+        run: |
+          export SINGLE_POD_NAME=$(kubectl get pod -l app=digital-marketing-api-deployment -o jsonpath="{.items[0].metadata.name}")
+          kubectl exec -it $SINGLE_POD_NAME -- bash /app/migrate.sh
+          kubectl exec -it $SINGLE_POD_NAME -- bash /app/collectstatic.sh
 
 
 
